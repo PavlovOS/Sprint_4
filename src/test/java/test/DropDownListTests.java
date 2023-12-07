@@ -1,18 +1,14 @@
 package test;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import page.object.HomePage;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 
-public class DropDownListTests {
-    private WebDriver driver;
+public class DropDownListTests extends ConfigurationWebDriver {
     private String question;
     private String answer;
     private final boolean visibility = true;
@@ -38,17 +34,11 @@ public class DropDownListTests {
 
     @Test
     public void dropDownListTest() {
-        driver = new ChromeDriver();
         driver.get("https://qa-scooter.praktikum-services.ru/");
 
         HomePage homePage = new HomePage(driver);
         homePage.clickQuestionButton(question);
         assertEquals("Ответ не соответствует вопросу", homePage.getAnswer(question), answer);
         assertEquals("Ответ скрыт",homePage.checkVisibilityAnswer(question), visibility);
-    }
-
-    @After
-    public void teardown() {
-        driver.quit();
     }
 }
