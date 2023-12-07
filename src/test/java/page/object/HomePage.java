@@ -55,6 +55,13 @@ public class HomePage {
     public void clickButtonGo() {
         driver.findElement(buttonGo).click();
     }
+    public void clickOrderButton(String location) {
+        if ("Top".equals(location)) {
+            clickTopOrderButton();
+        } else {
+            clickMiddleOrderButton();
+        }
+    }
     public String getAnswer(String question) {
         By questionAnswer = By.xpath(".//div[text() = '" + question + "']/../../div[2]/p");
         new WebDriverWait(driver, Duration.ofSeconds(3))
