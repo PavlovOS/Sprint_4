@@ -1,21 +1,17 @@
 package test;
 
-import org.junit.After;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import page.object.HomePage;
 import page.object.OrderPageAboutRent;
 import page.object.OrderPageForWhom;
 
 import static org.junit.Assert.assertEquals;
 
-public class OrderScooterTests {
-    private WebDriver driver;
+public class OrderScooterTests extends ConfigurationWebDriver {
     @Test
-    public void OrderByTopButton() {
-        driver = new ChromeDriver();
+    public void orderWithAllParameters() {
         driver.get("https://qa-scooter.praktikum-services.ru/");
+        String location = "Top";
         String name = "Олег";
         String surname = "Павлов";
         String address = "Бутырская 5";
@@ -30,16 +26,16 @@ public class OrderScooterTests {
         HomePage homePage = new HomePage(driver);
         OrderPageForWhom orderPageForWhom = new OrderPageForWhom(driver);
         OrderPageAboutRent orderPageAboutRent = new OrderPageAboutRent(driver);
-        homePage.clickTopOrderButton();
+        homePage.clickOrderButton(location);
         orderPageForWhom.makingOrderForWhom(name, surname, address, metro, phone);
         orderPageAboutRent.makingOrderAboutRent(date, rentalPeriod, colorScooter, comment);
         orderPageAboutRent.confirmOrder();
         assertEquals("Окно \"Заказ оформлен\" не появилось", resault, orderPageAboutRent.orderConfirmationWindow());
     }
     @Test
-    public void OrderByMiddleButton() {
-        driver = new ChromeDriver();
+    public void orderWithoutComment() {
         driver.get("https://qa-scooter.praktikum-services.ru/");
+        String location = "Middle";
         String name = "Олег";
         String surname = "Павлов";
         String address = "Бутырская 5";
@@ -53,14 +49,10 @@ public class OrderScooterTests {
         HomePage homePage = new HomePage(driver);
         OrderPageForWhom orderPageForWhom = new OrderPageForWhom(driver);
         OrderPageAboutRent orderPageAboutRent = new OrderPageAboutRent(driver);
-        homePage.clickMiddleOrderButton();
+        homePage.clickOrderButton(location);
         orderPageForWhom.makingOrderForWhom(name, surname, address, metro, phone);
         orderPageAboutRent.makingOrderAboutRent(date, rentalPeriod, colorScooter);
         orderPageAboutRent.confirmOrder();
         assertEquals("Окно \"Заказ оформлен\" не появилось", result, orderPageAboutRent.orderConfirmationWindow());
-    }
-    @After
-    public void teardown() {
-        driver.quit();
     }
 }
